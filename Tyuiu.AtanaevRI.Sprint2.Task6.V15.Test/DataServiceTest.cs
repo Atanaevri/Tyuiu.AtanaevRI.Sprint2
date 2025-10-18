@@ -37,7 +37,7 @@ namespace Tyuiu.AtanaevRI.Sprint2.Task6.V15.Test
         {
             DataService ds = new DataService();
 
-            // Проверка граничных значений
+           
             string result1 = ds.FindDayName(0);
             string result2 = ds.FindDayName(366);
 
