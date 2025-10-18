@@ -5,73 +5,46 @@ namespace Tyuiu.AtanaevRI.Sprint2.Task5.V14.Test
     public sealed class DataServiceTest
     {
         [TestMethod]
-        public void TestFirstDay_Monday()
+        public void ValidFindDayName()
         {
-            // 1 января - понедельник (d=1)
-            string result = DayOfWeekCalculator.CalculateDayOfWeek(1, 1);
-            Assert.AreEqual("понедельник", result);
+            DataService ds = new DataService();
+
+            // 1 января - понедельник
+            Assert.AreEqual("Понедельник", ds.FindDayName(1));
+
+            // 2 января - вторник
+            Assert.AreEqual("Вторник", ds.FindDayName(2));
+
+            // 7 января - воскресенье
+            Assert.AreEqual("Воскресенье", ds.FindDayName(7));
+
+            // 8 января - понедельник (новая неделя)
+            Assert.AreEqual("Понедельник", ds.FindDayName(8));
+
+            // 14 января - воскресенье
+            Assert.AreEqual("Воскресенье", ds.FindDayName(14));
+
+            // 31 декабря (365-й день) - воскресенье
+            Assert.AreEqual("Воскресенье", ds.FindDayName(365));
+
+            // 30 декабря (364-й день) - суббота
+            Assert.AreEqual("Суббота", ds.FindDayName(364));
         }
 
         [TestMethod]
-        public void TestFirstDay_Sunday()
+        public void InvalidFindDayName()
         {
-            // 1 января - воскресенье (d=7)
-            string result = DayOfWeekCalculator.CalculateDayOfWeek(1, 7);
-            Assert.AreEqual("воскресенье", result);
-        }
+            DataService ds = new DataService();
 
-        [TestMethod]
-        public void TestMiddleYear_Wednesday()
-        {
-            // 1 января - понедельник, 100-й день
-            string result = DayOfWeekCalculator.CalculateDayOfWeek(100, 1);
-            Assert.AreEqual("среда", result);
-        }
+            // Проверка граничных значений
+            string result1 = ds.FindDayName(0);
+            string result2 = ds.FindDayName(366);
 
-        [TestMethod]
-        public void TestLastDay_Thursday()
-        {
-            // 1 января - пятница (d=5), 365-й день
-            string result = DayOfWeekCalculator.CalculateDayOfWeek(365, 5);
-            Assert.AreEqual("четверг", result);
-        }
-
-        [TestMethod]
-        public void TestWeekend_Saturday()
-        {
-            // 1 января - понедельник, 6-й день (суббота)
-            string result = DayOfWeekCalculator.CalculateDayOfWeek(6, 1);
-            Assert.AreEqual("суббота", result);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void TestInvalidK_Zero()
-        {
-            DayOfWeekCalculator.CalculateDayOfWeek(0, 1);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void TestInvalidK_Over365()
-        {
-            DayOfWeekCalculator.CalculateDayOfWeek(366, 1);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void TestInvalidD_Zero()
-        {
-            DayOfWeekCalculator.CalculateDayOfWeek(1, 0);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void TestInvalidD_Over7()
-        {
-            DayOfWeekCalculator.CalculateDayOfWeek(1, 8);
+            Assert.IsTrue(result1.Contains("Ошибка"));
+            Assert.IsTrue(result2.Contains("Ошибка"));
         }
     }
 }
-    
+
+
 
