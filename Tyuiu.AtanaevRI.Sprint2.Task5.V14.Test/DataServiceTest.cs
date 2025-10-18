@@ -9,26 +9,17 @@ namespace Tyuiu.AtanaevRI.Sprint2.Task5.V14.Test
         {
             DataService ds = new DataService();
 
-            // 1 января - понедельник
-            Assert.AreEqual("Понедельник", ds.FindDayName(1));
+            // Тестируем для случая, когда 1 января - понедельник (d=1)
+            Assert.AreEqual("Понедельник", ds.FindDayName(1, 1));    // 1 января
+            Assert.AreEqual("Вторник", ds.FindDayName(2, 1));        // 2 января
+            Assert.AreEqual("Воскресенье", ds.FindDayName(7, 1));    // 7 января
+            Assert.AreEqual("Понедельник", ds.FindDayName(8, 1));    // 8 января
+            Assert.AreEqual("Воскресенье", ds.FindDayName(365, 1));  // 31 декабря
 
-            // 2 января - вторник
-            Assert.AreEqual("Вторник", ds.FindDayName(2));
-
-            // 7 января - воскресенье
-            Assert.AreEqual("Воскресенье", ds.FindDayName(7));
-
-            // 8 января - понедельник (новая неделя)
-            Assert.AreEqual("Понедельник", ds.FindDayName(8));
-
-            // 14 января - воскресенье
-            Assert.AreEqual("Воскресенье", ds.FindDayName(14));
-
-            // 31 декабря (365-й день) - воскресенье
-            Assert.AreEqual("Воскресенье", ds.FindDayName(365));
-
-            // 30 декабря (364-й день) - суббота
-            Assert.AreEqual("Суббота", ds.FindDayName(364));
+            // Тестируем для случая, когда 1 января - среда (d=3)
+            Assert.AreEqual("Среда", ds.FindDayName(1, 3));          // 1 января
+            Assert.AreEqual("Четверг", ds.FindDayName(2, 3));        // 2 января
+            Assert.AreEqual("Вторник", ds.FindDayName(7, 3));        // 7 января
         }
 
         [TestMethod]
@@ -36,15 +27,19 @@ namespace Tyuiu.AtanaevRI.Sprint2.Task5.V14.Test
         {
             DataService ds = new DataService();
 
-            // Проверка граничных значений
-            string result1 = ds.FindDayName(0);
-            string result2 = ds.FindDayName(366);
+            // Проверка граничных значений для k
+            string result1 = ds.FindDayName(0, 1);
+            string result2 = ds.FindDayName(366, 1);
+
+            // Проверка граничных значений для d
+            string result3 = ds.FindDayName(1, 0);
+            string result4 = ds.FindDayName(1, 8);
 
             Assert.IsTrue(result1.Contains("Ошибка"));
             Assert.IsTrue(result2.Contains("Ошибка"));
+            Assert.IsTrue(result3.Contains("Ошибка"));
+            Assert.IsTrue(result4.Contains("Ошибка"));
         }
     }
 }
-
-
 
